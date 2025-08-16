@@ -6,6 +6,8 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
+import { Button } from "../ui/button";
+import { Loader2 } from "lucide-react";
 
 export default function Signup() {
   const [signupData, setSignupData] = useState({
@@ -14,7 +16,7 @@ export default function Signup() {
     phoneNumber: "",
     password: "",
     role: "student",
-    profileImage: null,
+    profilePhoto: null,
   });
 
   const {loading} = useSelector(store=>store.auth);
@@ -26,7 +28,7 @@ export default function Signup() {
   };
 
   const changeFileHandler = (e) => {
-    setSignupData({ ...signupData, profileImage: e.target.files?.[0] });
+    setSignupData({ ...signupData, profilePhoto: e.target.files?.[0] });
   };
 
   const handleSignupSubmit = async (e) => {
@@ -39,8 +41,8 @@ export default function Signup() {
     formdata.append("phoneNumber", signupData.phoneNumber);
     formdata.append("password", signupData.password);
     formdata.append("role", signupData.role);
-    if (signupData.profileImage) {
-      formdata.append("profileImage", signupData.profileImage);
+    if (signupData.profilePhoto) {
+      formdata.append("file", signupData.profilePhoto);
     }
 
     try {
@@ -57,7 +59,7 @@ export default function Signup() {
           phoneNumber: "",
           password: "",
           role: "student",
-          profileImage: null,
+          profilePhoto: null,
         });
         toast.success(res.data.message || "Signup successful!");
         navigate("/auth/login");
@@ -196,14 +198,14 @@ export default function Signup() {
           <label className="file-input-label">
             <input
               type="file"
-              name="profileImage"
+              name="file"
               accept="image/*"
               onChange={changeFileHandler}
               className="file-input"
             />
             <span className="file-input-text">
-              {signupData.profileImage
-                ? signupData.profileImage.name
+              {signupData.profilePhoto
+                ? signupData.profilePhoto.name
                 : "Choose Profile Picture"}
             </span>
             <i className="fas fa-upload"></i>

@@ -1,9 +1,13 @@
 import React from "react";
 import { LatestJobCards } from "./LatestJobCards";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
-const randomJobs = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+// const randomJobs = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
 export const LatestJobs = () => {
+  const { allJobs } = useSelector((store) => store.job);
+  const navigate = useNavigate();
   return (
     <section className="max-w-7xl mx-auto px-4 my-20">
       {/* Heading */}
@@ -13,20 +17,28 @@ export const LatestJobs = () => {
           Job Openings
         </h1>
         <p className="text-gray-600 mt-3 max-w-2xl mx-auto">
-          Explore exciting opportunities from top companies and find the role that matches your skills and ambitions.
+          Explore exciting opportunities from top companies and find the role
+          that matches your skills and ambitions.
         </p>
       </div>
 
       {/* Job Grid */}
       <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
-        {randomJobs.slice(0, 6).map((item, index) => (
-          <LatestJobCards key={index} />
-        ))}
+        {allJobs.length > 0 ? (
+          allJobs
+            ?.slice(0, 6)
+            .map((job) => <LatestJobCards key={job._id} job={job} />)
+        ) : (
+          <span>No jobs Available</span>
+        )}
       </div>
 
       {/* View All Button */}
       <div className="text-center mt-10">
-        <button className="px-6 py-3 bg-[#F83002] text-white rounded-full hover:bg-[#d62802] transition">
+        <button
+          className="px-6 py-3 bg-[#F83002] text-white rounded-full hover:bg-[#d62802] transition"
+          onClick={() => navigate("/jobs")}
+        >
           View All Jobs
         </button>
       </div>

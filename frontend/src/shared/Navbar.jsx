@@ -7,10 +7,30 @@ import { Avatar, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import React from "react";
 import { LogOut, Settings, User2 } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { USER_API_END_POINT } from "@/utils/constant";
+import { setUser } from "@/redux/authSlice";
+import { toast } from "sonner";
+import axios from "axios";
 
 export const Navbar = () => {
-  const user = false; // Set this to `false` to show login/signup
+  const {user} = useSelector(store=>store.auth);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const logoutHandler = async ()=>{
+    try {
+      const res = await axios.get(`${USER_API_END_POINT}/logout`,{withCredentials:true});
+      if(res.data.success){
+        dispatch(setUser(null));
+        navigate("/");
+        toast.success(res.data.message);
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error(error.response.data.message);
+    }
+  }
 
   return (
     <div className="bg-white shadow-sm">
@@ -60,17 +80,17 @@ export const Navbar = () => {
             <Popover>
               <PopoverTrigger asChild>
                 <Avatar className="cursor-pointer">
-                  <AvatarImage src="https://github.com/shadcn.png" />
+                  <AvatarImage src={user?.profile?.profilePhoto} />
                 </Avatar>
               </PopoverTrigger>
               <PopoverContent className="w-80 mt-2 rounded-xl shadow-xl border p-4">
                 <div className="flex items-center gap-4">
                   <Avatar>
-                    <AvatarImage src="https://github.com/shadcn.png" />
+                    <AvatarImage src={user?.profile?.profilePhoto} />
                   </Avatar>
                   <div>
-                    <h4 className="font-medium text-lg">Ankit Raj</h4>
-                    <p className="text-sm text-gray-500">ankitraj@email.com</p>
+                    <h4 className="font-medium text-lg">{user?.profile?.fullname}</h4>
+                    <p className="text-sm text-gray-500">{user?.profile?.email}</p>
                   </div>
                 </div>
                 <div className="mt-4 space-y-2">
@@ -78,7 +98,7 @@ export const Navbar = () => {
                     variant="outline"
                     className="w-full flex items-center gap-2"
                   >
-                    <User2 className="w-4 h-4" /> Profile
+                    <User2 className="w-4 h-4" /> <Link to="/profile">Profile</Link>
                   </Button>
                   <Button
                     variant="outline"
@@ -89,6 +109,7 @@ export const Navbar = () => {
                   <Button
                     variant="destructive"
                     className="w-full flex items-center gap-2"
+                    onClick={logoutHandler}
                   >
                     <LogOut className="w-4 h-4" /> Logout
                   </Button>

@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-import { setLoading } from "@/redux/authSlice";
-=======
 import { setLoading, setUser } from "@/redux/authSlice";
->>>>>>> 8da8c88 (16/08/25)
 import store from "@/redux/store";
 import { USER_API_END_POINT } from "@/utils/constant";
 import axios from "axios";
@@ -35,10 +31,7 @@ export default function Login() {
         withCredentials: true,
       });
       if (res.data.success) {
-<<<<<<< HEAD
-=======
         dispatch(setUser(res.data.user));
->>>>>>> 8da8c88 (16/08/25)
         setLoginData({
           email: "",
           password: "",

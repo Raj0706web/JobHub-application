@@ -4,17 +4,7 @@ import { Button } from "./ui/button";
 import { Bookmark } from "lucide-react";
 import { Avatar, AvatarImage } from "./ui/avatar";
 
-export const Job = ({
-  title,
-  company,
-  logo,
-  location,
-  description,
-  type,
-  salary,
-  mode,
-  postedAt,
-}) => {
+export const Job = ({job}) => {
   // Function for showing "x days ago"
   const daysAgo = (date) => {
     const today = new Date();
@@ -47,14 +37,14 @@ export const Job = ({
           <AvatarImage src={logo} alt={company} />
         </Avatar>
         <div>
-          <h3 className="font-semibold text-gray-900">{company}</h3>
-          <p className="text-sm text-gray-500">{location}</p>
+          <h3 className="font-semibold text-gray-900">{job?.company?.name}</h3>
+          <p className="text-sm text-gray-500">India</p>
         </div>
       </div>
 
       {/* Job Title & Description */}
-      <h2 className="text-lg font-semibold text-gray-900 mb-2">{title}</h2>
-      <p className="text-gray-600 text-sm mb-4 line-clamp-3">{description}</p>
+      <h2 className="text-lg font-semibold text-gray-900 mb-2">{job?.title}</h2>
+      <p className="text-gray-600 text-sm mb-4 line-clamp-3">{job?.description}</p>
 
       {/* Tags */}
       <div className="flex flex-wrap gap-2 mb-5">
@@ -62,19 +52,19 @@ export const Job = ({
           variant="outline"
           className="text-[#F83002] border-[#F83002] font-medium"
         >
-          {type}
+          {job?.jobType}
         </Badge>
         <Badge
           variant="outline"
           className="text-[#F83002] border-[#F83002] font-medium"
         >
-          {salary}
+          {job?.salary}
         </Badge>
         <Badge
           variant="outline"
           className="text-[#F83002] border-[#F83002] font-medium"
         >
-          {mode}
+          {job?.positions}
         </Badge>
       </div>
 

@@ -3,6 +3,7 @@ import { Navbar } from "@/shared/Navbar";
 import { FilterCard } from "./FilterCard";
 import { Job } from "./Job";
 import { Link, useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 export const Jobs = () => {
   const jobsArray = [
@@ -48,6 +49,7 @@ export const Jobs = () => {
   ];
 
   const navigate = useNavigate();
+  const { allJobs } = useSelector(store=>store.job);
 
   return (
     <div className="bg-gray-50 min-h-screen">
@@ -63,14 +65,14 @@ export const Jobs = () => {
 
           {/* JOB LISTINGS */}
           <div className="flex-1 h-[88vh] overflow-y-auto pb-6">
-            {jobsArray.length <= 0 ? (
+            {allJobs.length <= 0 ? (
               <div className="flex justify-center items-center h-full text-gray-500">
                 No jobs found
               </div>
             ) : (
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                {jobsArray.map((job) => (
-                  <Link key={job.id} to = {`/description/${job.id}`} className="block"><Job {...job} onApply={()=>navigate(`/description/${job.id}`)} /></Link>
+                {allJobs.map((job) => (
+                  <Link key={job?._id} to = {`/description/${job?._id}`} className="block"><Job job={job} onApply={()=>navigate(`/description/${job?._id}`)} /></Link>
                 ))}
               </div>
             )}

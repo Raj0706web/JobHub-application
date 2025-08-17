@@ -12,15 +12,10 @@
   "description": "",
   "dependencies": {
     "bcryptjs": "^3.0.2",
-<<<<<<< HEAD
-    "cookie-parser": "^1.4.7",
-    "cors": "^2.8.5",
-=======
     "cloudinary": "^2.7.0",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
     "datauri": "^4.1.0",
->>>>>>> 774dcb2 (Save my local README and backend)
     "dotenv": "^17.2.1",
     "express": "^5.1.0",
     "jsonwebtoken": "^9.0.2",

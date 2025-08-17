@@ -1,20 +1,27 @@
 import React from "react";
 import { Badge } from "./ui/badge";
+import { Avatar, AvatarImage, AvatarFallback } from "./ui/avatar";
 
-export const LatestJobCards = ({job}) => {
+export const LatestJobCards = ({ job }) => {
   return (
     <div className="p-6 border border-gray-200 rounded-xl shadow-sm hover:shadow-md transition bg-white max-w-lg mx-auto">
       {/* Company Info */}
       <div className="flex items-center justify-between mb-4">
         <div>
-          <h2 className="text-lg font-semibold text-gray-800">{job?.company?.name}</h2>
+          <h2 className="text-lg font-semibold text-gray-800">
+            {job?.company?.name}
+          </h2>
           <p className="text-sm text-gray-500">India</p>
         </div>
-        <img
-          src="https://via.placeholder.com/40"
-          alt="Company Logo"
-          className="w-10 h-10 object-cover rounded-full border"
-        />
+        <Avatar className="w-12 h-12 border">
+          <AvatarImage
+            src={job?.company?.logo}
+            alt={job?.company?.name || "Company Logo"}
+          />
+          <AvatarFallback>
+            {job?.company?.name?.substring(0, 2).toUpperCase() || "NA"}
+          </AvatarFallback>
+        </Avatar>
       </div>
 
       {/* Job Title & Description */}

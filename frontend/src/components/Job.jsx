@@ -18,9 +18,9 @@ export const Job = ({job}) => {
       {/* Top Row - Date + Bookmark */}
       <div className="flex justify-between items-center mb-3">
         <p className="text-xs text-gray-500">
-          {daysAgo(postedAt) === 0
+          {daysAgo(job?.createdAt) === 0
             ? "Today"
-            : `${daysAgo(postedAt)} days ago`}
+            : `${daysAgo(job?.createdAt)} days ago`}
         </p>
         <Button
           variant="outline"
@@ -34,11 +34,11 @@ export const Job = ({job}) => {
       {/* Company Info */}
       <div className="flex items-center gap-3 mb-4">
         <Avatar className="w-12 h-12 border">
-          <AvatarImage src={logo} alt={company} />
+          <AvatarImage src={job?.company?.logo} alt={job?.company?.name} />
         </Avatar>
         <div>
           <h3 className="font-semibold text-gray-900">{job?.company?.name}</h3>
-          <p className="text-sm text-gray-500">India</p>
+          <p className="text-sm text-gray-500">{job?.location}</p>
         </div>
       </div>
 
@@ -52,19 +52,19 @@ export const Job = ({job}) => {
           variant="outline"
           className="text-[#F83002] border-[#F83002] font-medium"
         >
-          {job?.jobType}
+          {job?.jobType} 
         </Badge>
         <Badge
           variant="outline"
           className="text-[#F83002] border-[#F83002] font-medium"
         >
-          {job?.salary}
+          {job?.salary} LPA
         </Badge>
         <Badge
           variant="outline"
           className="text-[#F83002] border-[#F83002] font-medium"
         >
-          {job?.positions}
+          {job?.positions} Positions
         </Badge>
       </div>
 

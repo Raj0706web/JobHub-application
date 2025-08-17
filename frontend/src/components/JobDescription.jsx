@@ -1,6 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Badge } from "./ui/badge";
 import { Button } from "./ui/button";
+import { useParams } from "react-router-dom";
+import axios from "axios";
+import { JOB_API_END_POINT } from "@/utils/constant";
+import { setSingleJob } from "@/redux/jobSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 const HighlightCard = ({ title, value }) => (
   <div className="bg-gray-50 p-6 rounded-lg text-center shadow-sm">
@@ -34,6 +39,27 @@ export const JobDescription = ({
   },
   onApply = () => {}
 }) => {
+  const params = useParams();
+  const jobId = params.id;
+  const {singleJob} = useSelector(store=>store.job);
+  const {user} = useSelector(store=>store.auth);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    const fetchSingleJob = async () => {
+      try {
+        const res = await axios.get(`${JOB_API_END_POINT}/get/${jobId}`, {
+          withCredentials: true,
+        });
+        console.log(res);
+        if (res.data.success) {
+          dispatch(setSingleJob(res.data.job));
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchSingleJob();
+  }, [jobId,dispatch,user?._id]);
   return (
     <div className="w-full max-w-7xl mx-auto my-14 p-14 bg-white rounded-2xl shadow-lg border border-gray-200 transition-all duration-300 hover:shadow-xl">
       
@@ -45,7 +71,7 @@ export const JobDescription = ({
           className="w-16 h-16 rounded-lg border border-gray-300 p-1"
         />
         <div>
-          <h2 className="text-2xl font-semibold text-gray-800">{companyName}</h2>
+          <h2 className="text-2xl font-semibold text-gray-800">{singleJob?.company?.name}</h2>
           <p className="text-base text-gray-500">{companyInfo}</p>
         </div>
       </div>

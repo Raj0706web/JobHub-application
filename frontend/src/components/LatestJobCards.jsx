@@ -1,10 +1,13 @@
 import React from "react";
 import { Badge } from "./ui/badge";
 import { Avatar, AvatarImage, AvatarFallback } from "./ui/avatar";
+import { useNavigate } from "react-router-dom";
 
 export const LatestJobCards = ({ job }) => {
+  const navigate = useNavigate();
   return (
-    <div className="p-6 border border-gray-200 rounded-xl shadow-sm hover:shadow-md transition bg-white max-w-lg mx-auto">
+    <div className="p-6 border border-gray-200 rounded-xl shadow-sm hover:shadow-md transition bg-white max-w-lg mx-auto"
+    onClick={() => navigate(`/description/${job._id}`)}>
       {/* Company Info */}
       <div className="flex items-center justify-between mb-4">
         <div>
@@ -47,7 +50,11 @@ export const LatestJobCards = ({ job }) => {
 
       {/* Apply Button */}
       <div className="mt-5">
-        <button className="w-full py-2 bg-[#F83002] text-white rounded-full hover:bg-[#d62802] transition">
+        <button className="w-full py-2 bg-[#F83002] text-white rounded-full hover:bg-[#d62802] transition"
+        onClick={e => {
+            e.stopPropagation(); // Prevents bubbling to card’s onClick
+            navigate(`/description/${job._id}`);
+          }}>
           Apply Now
         </button>
       </div>

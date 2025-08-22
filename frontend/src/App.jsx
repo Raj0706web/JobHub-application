@@ -8,6 +8,8 @@ import { Browse } from './components/Browse';
 import { AboutSection } from './components/AboutSection';
 import { Profile } from './components/Profile';
 import { JobDescription } from './components/JobDescription';
+import { Companies } from './components/admin/Companies';
+import { CompanyCreate } from './components/admin/CompanyCreate';
 
 const router = createBrowserRouter([
   {
@@ -51,7 +53,16 @@ const router = createBrowserRouter([
   {
     path:"/profile",
     element:<Profile/>
-  }
+  },
+  // admin ke liye yaha se start hoga
+  {
+    path:"/admin/companies",
+    element:<Companies/>
+  },
+  {
+    path:"/admin/companies/create",
+    element:<CompanyCreate/>
+  },
 ]);
 
 export default function App() {

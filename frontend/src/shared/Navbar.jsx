@@ -15,13 +15,15 @@ import { toast } from "sonner";
 import axios from "axios";
 
 export const Navbar = () => {
-  const {user} = useSelector(store=>store.auth);
+  const { user } = useSelector((store) => store.auth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const logoutHandler = async ()=>{
+  const logoutHandler = async () => {
     try {
-      const res = await axios.get(`${USER_API_END_POINT}/logout`,{withCredentials:true});
-      if(res.data.success){
+      const res = await axios.get(`${USER_API_END_POINT}/logout`, {
+        withCredentials: true,
+      });
+      if (res.data.success) {
         dispatch(setUser(null));
         navigate("/");
         toast.success(res.data.message);
@@ -30,7 +32,7 @@ export const Navbar = () => {
       console.log(error);
       toast.error(error.response.data.message);
     }
-  }
+  };
 
   return (
     <div className="bg-white shadow-sm">
@@ -44,20 +46,31 @@ export const Navbar = () => {
 
         {/* Navigation Links */}
         <div className="flex items-center gap-12">
-          <ul className="flex font-medium items-center gap-5">
-            <li className="hover:text-[#F83002] cursor-pointer">
-              <Link to="/">Home</Link>
-            </li>
-            <li className="hover:text-[#F83002] cursor-pointer">
-              <Link to="/jobs">Jobs</Link>
-            </li>
-            <li className="hover:text-[#F83002] cursor-pointer">
-              <Link to="/browse">Browse</Link>
-            </li>
-            <li className="hover:text-[#F83002] cursor-pointer">
-              <Link to="/about">About</Link>
-            </li>
-          </ul>
+          {user && user.role === "recruiter" ? (
+            <ul className="flex font-medium items-center gap-5">
+              <li className="hover:text-[#F83002] cursor-pointer">
+                <Link to="/admin/companies">Companies</Link>
+              </li>
+              <li className="hover:text-[#F83002] cursor-pointer">
+                <Link to="/admin/jobs">Jobs</Link>
+              </li>
+            </ul>
+          ) : (
+            <ul className="flex font-medium items-center gap-5">
+              <li className="hover:text-[#F83002] cursor-pointer">
+                <Link to="/">Home</Link>
+              </li>
+              <li className="hover:text-[#F83002] cursor-pointer">
+                <Link to="/jobs">Jobs</Link>
+              </li>
+              <li className="hover:text-[#F83002] cursor-pointer">
+                <Link to="/browse">Browse</Link>
+              </li>
+              <li className="hover:text-[#F83002] cursor-pointer">
+                <Link to="/about">About</Link>
+              </li>
+            </ul>
+          )}
 
           {/* User Block */}
           {!user ? (
@@ -89,17 +102,24 @@ export const Navbar = () => {
                     <AvatarImage src={user?.profile?.profilePhoto} />
                   </Avatar>
                   <div>
-                    <h4 className="font-medium text-lg">{user?.profile?.fullname}</h4>
-                    <p className="text-sm text-gray-500">{user?.profile?.email}</p>
+                    <h4 className="font-medium text-lg">
+                      {user?.profile?.fullname}
+                    </h4>
+                    <p className="text-sm text-gray-500">
+                      {user?.profile?.email}
+                    </p>
                   </div>
                 </div>
                 <div className="mt-4 space-y-2">
-                  <Button
-                    variant="outline"
-                    className="w-full flex items-center gap-2"
-                  >
-                    <User2 className="w-4 h-4" /> <Link to="/profile">Profile</Link>
-                  </Button>
+                  {user && user.role === "student" && (
+                    <Button
+                      variant="outline"
+                      className="w-full flex items-center gap-2"
+                    >
+                      <User2 className="w-4 h-4" />{" "}
+                      <Link to="/profile">Profile</Link>
+                    </Button>
+                  )}
                   <Button
                     variant="outline"
                     className="w-full flex items-center gap-2"

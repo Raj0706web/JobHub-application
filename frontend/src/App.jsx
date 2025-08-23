@@ -10,6 +10,7 @@ import { Profile } from './components/Profile';
 import { JobDescription } from './components/JobDescription';
 import { Companies } from './components/admin/Companies';
 import { CompanyCreate } from './components/admin/CompanyCreate';
+import { CompanySetup } from './components/admin/CompanySetup';
 
 const router = createBrowserRouter([
   {
@@ -63,6 +64,10 @@ const router = createBrowserRouter([
     path:"/admin/companies/create",
     element:<CompanyCreate/>
   },
+  {
+    path:"/admin/companies/:id",
+    element:<CompanySetup/>
+  }
 ]);
 
 export default function App() {

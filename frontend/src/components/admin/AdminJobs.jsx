@@ -2,14 +2,14 @@ import { Navbar } from "@/shared/Navbar";
 import React, { useState, useCallback } from "react";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
-import { CompaniesTable } from "./CompaniesTable";
 import { useNavigate } from "react-router-dom";
-import { useGetAllCompanies } from "../hooks/useGetAllCompanies";
+import { AdminJobsTable } from "./AdminJobsTable";
+import { useGetAllAdminJobs } from "../hooks/useGetAllAdminJobs";
 
-export const Companies = () => {
+export const AdminJobs = () => {
+  useGetAllAdminJobs();
   const [filter, setFilter] = useState("");
   const navigate = useNavigate();
-  useGetAllCompanies();
   const handleFilterChange = useCallback(
     (e) => setFilter(e.target.value), []
   );
@@ -43,7 +43,7 @@ export const Companies = () => {
             + New Company
           </Button>
         </div>
-        <CompaniesTable filter={filter} />
+        <AdminJobsTable filter={filter} />
       </main>
     </div>
   );

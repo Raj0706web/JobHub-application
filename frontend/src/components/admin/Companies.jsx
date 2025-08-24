@@ -14,7 +14,7 @@ export const Companies = () => {
   );
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-[#faf7f7] via-[#f8fcfa] to-[#eef2fa]">
+    <div className="min-h-screen bg-gradient-to-b from-[#faf7f7] via-[#f8fcfa] to-[#f83002]">
       <Navbar />
       <main className="max-w-6xl mx-auto p-6 sm:p-12">
         <div className="text-center mb-11 mt-6">

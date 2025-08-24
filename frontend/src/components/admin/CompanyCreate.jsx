@@ -4,16 +4,36 @@ import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { COMPANY_API_END_POINT } from "@/utils/constant";
+import { useDispatch } from "react-redux";
+import { toast } from "sonner";
+import { setSingleCompany } from "@/redux/companySlice";
 
 export const CompanyCreate = () => {
   const [companyName, setCompanyName] = useState("");
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Your logic here
-    alert(`Company "${companyName}" created!`);
-    setCompanyName("");
+    try {
+      const res = await axios.post(`${COMPANY_API_END_POINT}/register`,{companyName},{
+        headers:{
+          'Content-Type':'application/json'
+        },
+        withCredentials:true
+      });
+      if(res.data.success){
+        dispatch(setSingleCompany(res.data.company));
+        toast.success(res.data.message);
+        const companyId = res?.data?.company?._id;
+        navigate(`/admin/companies/${companyId}`);
+      }
+    } catch (error) {
+      toast.error(error?.response?.data?.message || "Something went wrong");
+      console.log(error);
+    }
   };
 
   const handleCancel = () => navigate(-1);

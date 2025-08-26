@@ -14,12 +14,12 @@ import { useSelector } from "react-redux";
 
 export const AdminJobsTable = ({ filter = "" }) => {
   // Get jobs array from Redux (update this selector if your store shape is different)
-  const {allAdminJobs} = useSelector(store => store.jobs);
+  const {allAdminJobs} = useSelector(store => store.job);
 
   // Filter by company or job title (role), case-insensitive
   const filteredJobs = allAdminJobs.filter(job =>
     (job.title?.toLowerCase() || "").includes(filter.toLowerCase()) ||
-    (job.company?.toLowerCase() || "").includes(filter.toLowerCase())
+    (job.company?.name?.toLowerCase() || "").includes(filter.toLowerCase())
   );
 
   return (
@@ -45,7 +45,7 @@ export const AdminJobsTable = ({ filter = "" }) => {
                 className="hover:bg-gray-50 transition-colors duration-150"
               >
                 <TableCell className="py-3 px-4 text-gray-700">
-                  {company || <span className="text-gray-400 italic">N/A</span>}
+                  {company?.name || <span className="text-gray-400 italic">N/A</span>}
                 </TableCell>
                 <TableCell className="py-3 px-4 text-gray-900 font-medium">
                   {title || <span className="text-gray-400 italic">No title</span>}

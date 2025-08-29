@@ -9,12 +9,14 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Popover, PopoverContent, PopoverTrigger } from "@radix-ui/react-popover";
-import { Edit2, MoreHorizontal } from "lucide-react";
+import { Edit2, Eye, MoreHorizontal } from "lucide-react";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 export const AdminJobsTable = ({ filter = "" }) => {
   // Get jobs array from Redux (update this selector if your store shape is different)
   const {allAdminJobs} = useSelector(store => store.job);
+  const navigate = useNavigate();
 
   // Filter by company or job title (role), case-insensitive
   const filteredJobs = allAdminJobs.filter(job =>
@@ -66,11 +68,18 @@ export const AdminJobsTable = ({ filter = "" }) => {
                     </PopoverTrigger>
                     <PopoverContent className="w-36 shadow-lg p-2 rounded border border-gray-200 bg-white">
                       <button
-                        className="flex items-center gap-2 w-full text-left px-3 py-2 rounded hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-                        onClick={() => alert(`Edit job: ${title || company || _id}`)}
+                        className="flex items-center gap-2 w-full text-left px-3 py-2 rounded border border-orange-200 hover:bg-gray-100 transition"
+                        onClick={() => navigate(`/admin/jobs/${_id}`)}
                       >
                         <Edit2 size={16} />
                         Edit
+                      </button>
+                      <button 
+                        className="flex items-center gap-2 w-full text-left px-3 py-2 rounded border border-orange-200 hover:bg-gray-100 transition"
+                        onClick={() => navigate(`/admin/jobs/${_id}/applicants`)}
+                      >
+                        <Eye size={16} />
+                        Applicants
                       </button>
                     </PopoverContent>
                   </Popover>

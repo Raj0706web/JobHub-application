@@ -38,9 +38,9 @@ export const AdminJobs = () => {
           />
           <Button
             className="rounded-full px-7 py-3 bg-orange-500 text-white font-semibold shadow-md hover:bg-orange-600 transition"
-            onClick={() => navigate("/admin/companies/create")}
+            onClick={() => navigate("/admin/jobs/create")}
           >
-            + New Company
+            + New jobs
           </Button>
         </div>
         <AdminJobsTable filter={filter} />

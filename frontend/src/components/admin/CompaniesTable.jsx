@@ -76,7 +76,7 @@ export const CompaniesTable = ({ filter = "" }) => {
                     </PopoverTrigger>
                     <PopoverContent className="w-36 shadow-lg p-2 rounded border border-gray-200 bg-white">
                       <button
-                        className="flex items-center gap-2 w-full text-left px-3 py-2 rounded hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                        className="flex items-center gap-2 w-full text-left px-3 py-2 rounded hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-orange-500"
                         onClick={()=>navigate(`/admin/companies/${_id}`)}
                       >
                         <Edit2 size={16} />
